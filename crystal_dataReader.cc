@@ -162,11 +162,15 @@ void crystal_dataReader()
     int count = 0;
     int status;
     int crystal[161][161] = { 0 };
+
+    //Crystal status (bef, irr, etc)
     std::pair <int, int> crystalInfo;
     vector < std::pair<int, int>> crystalData;
-    
 
-    
+//     //Crystal LT
+//     std::pair <double, double> LTVal;//wavelength, light transmission pairs
+//     vector < std::pair<double, double>> crystalLT;
+        
 
     while (!file.eof()) {
         
@@ -223,7 +227,7 @@ void crystal_dataReader()
           
 	  crystalInfo = make_pair(crynum, gieSTAT[nscan]);
 	  crystalData.push_back(crystalInfo);
-	  cout << crystalData.at(count).first << " " << crystalData.at(count).second << endl;
+	  //cout << crystalData.at(count).first << " " << crystalData.at(count).second << endl;
 	  count++;
 	}
       }
@@ -257,6 +261,23 @@ void crystal_dataReader()
       }
     }
 
+
+     for (int ii = 0; ii < NgieFile; ii++){
+
+//     //Crystal LT
+//     std::pair <double, double> LTVal;//wavelength, light transmission pairs
+//     vector < std::pair<double, double>> crystalLT;
+
+       cout << "Crystal number " << crystalData.at(ii).first << " , scan (0 == bef, 1 == irr) = " << crystalData.at(ii).second << endl;
+
+//       for (int jj = 0; jj < 1151; jj++){
+// 	LTVal = make_pair(gieWL[jj],gie_LTO[ii][jj]);
+// 	crystalLT.push_back(LTVal);
+//       }
+
+//       //crystalLT, and all other pertinent values, should then be written to the tree
+
+     }
 
     for (int first = 0; first < NgieFile; first++){
       for (int j = 1; j < NgieFile; j++) {
