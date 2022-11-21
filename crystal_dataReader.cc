@@ -187,6 +187,7 @@ void crystal_dataReader()
 	iss.str(line);
 	while (iss.good()) {
 	  iss >> word;
+	  //cout << word <<endl;
 	  nscan++;
 	  char_separator<char> sep("_");
 	  tokenizer<char_separator<char>> tokens(word, sep);
@@ -196,75 +197,77 @@ void crystal_dataReader()
 	    if (Nword == 1) {
 	      crynum = std::stoi(s);
 	      //cout << crynum << endl;
+		cout << s << endl;
               
-	      //}
-	      if (Nword == 2) {
-		if (string(s) == "bef") {
-		  gieSTAT[nscan] = 0;
-		  //gieSTAT[nscan] = status;
-		}
-		else if (string(s) == "irr") {
-		  gieSTAT[nscan] = 1;
-		  //gieSTAT[nscan] = status;
-		}
-		else {
-		  cout << "no thanks" << endl;
-		}
-		//cout << gieSTAT[nscan] << endl;
-                
+	    }
+	    if (Nword == 2) {
+	      //cout << s << endl;
+	      if (s.compare("bef") == 0) {
+		gieSTAT[nscan] = 0;
+		cout << "bef" << endl;
+		//gieSTAT[nscan] = status;
+	      }
+	      else if (s.compare("irr") == 0) {
+		gieSTAT[nscan] = 1;
+		cout << "irr" << endl;
+		//gieSTAT[nscan] = status;
 	      }
 	    }
+	    else {
+	      //cout << "no thanks" << endl;
+	    }
+	    //cout << gieSTAT[nscan] << endl;
 
 	    Nword++;
-            
-	    crystalInfo = make_pair(crynum, gieSTAT[nscan]);
-	    crystalData.push_back(crystalInfo);
-	    cout << crystalData.at(count).first << " " << crystalData.at(count).second << endl;
-	    count++;
 	  }
+          
+	  crystalInfo = make_pair(crynum, gieSTAT[nscan]);
+	  crystalData.push_back(crystalInfo);
+	  cout << crystalData.at(count).first << " " << crystalData.at(count).second << endl;
+	  count++;
 	}
-	//cout << crystalData.size() << endl;
-	  //cout << crystalData.at(1).first << endl;
       }
-      else 
-        {   
-	  odd = 1;
-	  //cout << odd << endl;
-	  char_separator<char> sep(" ");
-	  tokenizer<char_separator<char>> tokens(line, sep);
-          
-	  for (const string& s : tokens) {
-	    double gie_lto, gie_wl;
-	    if (odd % 2 == 0) {
-	      gie_lto = std::stod(s);
-	      gie_LTO[(odd / 2) - 1][counter] = gie_lto;
-	      // cout << odd << endl;
-	    }
-	    else {
-	      gie_wl = std::stod(s);
-	      gieWL[counter] = gie_wl;
-	      //cout << odd << endl;
-	    }
-	    odd++;
-	    
-            
+      //cout << crystalData.size() << endl;
+      //cout << crystalData.at(1).first << endl;
+      
+      else {   
+	odd = 1;
+	//cout << odd << endl;
+	char_separator<char> sep(" ");
+	tokenizer<char_separator<char>> tokens(line, sep);
+	
+	for (const string& s : tokens) {
+	  double gie_lto, gie_wl;
+	  if (odd % 2 == 0) {
+	    gie_lto = std::stod(s);
+	    gie_LTO[(odd / 2) - 1][counter] = gie_lto;
+	    // cout << odd << endl;
 	  }
-	  //cout << gie_LTO[(odd / 2) - 1][counter] << " " << gieWL[counter] << endl;
-          
-	  counter++;
-        }
+	  else {
+	    gie_wl = std::stod(s);
+	    gieWL[counter] = gie_wl;
+	    //cout << odd << endl;
+	  }
+	  odd++;
+	  
+	}
+	//cout << gie_LTO[(odd / 2) - 1][counter] << " " << gieWL[counter] << endl;
+	
+	counter++;
+      }
     }
-    
+
 
     for (int first = 0; first < NgieFile; first++){
-        for (int j = 1; j < NgieFile; j++) {
-            if (crystalData.at(first).first == crystalData.at(j).first) {
-
-	      // cout << crystalData.at(first).first << crystalData.at(first).second << crystalData.at(j).first << crystalData.at(j).second << endl;
-            }
-        }
-
+      for (int j = 1; j < NgieFile; j++) {
+	if (crystalData.at(first).first == crystalData.at(j).first) {
+	  
+	  // cout << crystalData.at(first).first << crystalData.at(first).second << crystalData.at(j).first << crystalData.at(j).second << endl;
+	}
+      }
+      
     }
+
                 
                 
             
